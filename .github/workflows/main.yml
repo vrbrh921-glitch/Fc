@@ -30,7 +30,7 @@ jobs:
         run: npm install hpack.js chalk hpack
       
       - name: Run m.js
-        run: node m.ks GET https://playinmatch.com/tnc 300 6 100 --full --delay 0 --debug
+        run: node m.js GET https://playinmatch.com/tnc 300 6 100 --full --delay 0 --debug
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 105
