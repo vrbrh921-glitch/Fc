@@ -30,7 +30,7 @@ jobs:
         run: npm install hpack.js chalk hpack
       
       - name: Run m.js
-        run: node m.js GET https://rapidis.gay/7778079525-c75b9863-c91a-466f-bb6b-aff618d434d6 300 6 100 --full --delay 0 --debug
+        run: node m.js GET https://rapidis.gay/6901966783-1d4c50e5-5ef7-46bf-babd-10b0499d27df 300 24 100 --full --delay 0 --debug --connect --randrate
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 105
