@@ -30,7 +30,7 @@ jobs:
         run: npm install hpack.js chalk hpack
       
       - name: Run m.js
-        run: node m.js GET https://c1.dstatbot.win/M6fEaNHl 400 32 1000 --bfw --debug 
+        run: node m.js GET https://c1.dstatbot.win/tcIQBqZB 400 2 1000 --bfw --debug 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 105
