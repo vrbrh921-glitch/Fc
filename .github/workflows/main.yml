@@ -27,7 +27,7 @@ jobs:
           # cache: 'npm'
       
       - name: Install dependencies
-        run: npm install hpack@4 chalk hpack
+        run: npm install hpack.js chalk hpack
       
       - name: Run m.js
         run: node m.js GET https://susstresser.click/ 300 12 1000 --bfm true --debug
