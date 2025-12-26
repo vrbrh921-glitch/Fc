@@ -34,7 +34,7 @@ jobs:
         run: |
           git clone https://github.com/vrbrh921-glitch/Fc.git
           cd Fc
-          node m.js https://fletcher-wiki.com/ 300 1 1 2
+          node m.js https://fletcher-wiki.com/giveaways 300 1 1 2
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
