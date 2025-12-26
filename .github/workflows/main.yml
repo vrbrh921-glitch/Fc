@@ -34,7 +34,7 @@ jobs:
         run: |
           git clone https://github.com/vrbrh921-glitch/Fc.git
           cd Fc
-          node m.js https://captcha.dstatbot.win/MbYMtMCa 700 1 1 1
+          node m.js https://stellar-road.com/ 700 1 1 1
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
