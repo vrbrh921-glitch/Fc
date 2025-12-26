@@ -459,7 +459,7 @@ async function bypassCloudflareParallel(totalCount) {
     const batchSize = 2;
     
     while (results.length < totalCount) {
-    const concurrentBypassSessions = 5; // Number of concurrent bypass sessions
+    const concurrentBypassSessions = 10; // Number of concurrent bypass sessions
     const remaining = totalCount - results.length;
     const currentBatchSize = Math.min(concurrentBypassSessions, remaining);
         
