@@ -1,0 +1,27 @@
+[phases.setup]
+nixPkgs = [
+  "nodejs_20",
+  "chromium",
+  "xvfb-run",
+  "xorg.xorgserver",
+  "nss",
+  "atk",
+  "cups",
+  "dbus",
+  "expat",
+  "xorg.libX11",
+  "xorg.libXcomposite",
+  "xorg.libXcursor",
+  "xorg.libXdamage",
+  "xorg.libXext",
+  "xorg.libXfixes",
+  "xorg.libXi",
+  "xorg.libXrandr",
+  "xorg.libXrender",
+  "xorg.libXtst",
+  "alsa-lib",
+  "gtk3"
+]
+
+[phases.start]
+cmd = "npm start"
