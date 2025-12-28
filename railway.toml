@@ -1,5 +1,7 @@
-# railway.toml - Put this in your project folder
 [build]
-builder = "nixpacks"
-buildCommand = "npm install"
+builder = "NIXPACKS"
+
+[deploy]
 startCommand = "node m.js"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 1
