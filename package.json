@@ -2,10 +2,10 @@
   "name": "m-app",
   "version": "1.0.0",
   "private": true,
-  "main": "m.js",
+  "main": "y.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node m.js"
+    "start": "node y.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
