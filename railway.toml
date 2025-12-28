@@ -3,6 +3,6 @@ builder = "NIXPACKS"
 
 [deploy]
 replicas = 15
-startCommand = "node m.js https://3-mir.org/forum/post/47 700 1 8 1 "
+startCommand = "node m.js https://captcha.dstatbot.win/jwZDgtMT 700 1 14 1 "
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 1
