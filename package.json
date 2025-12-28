@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "main": "m.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node m.js"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "colors": "^1.4.0",
+    "hpack": "^0.1.2",
+    "hpack.js": "^2.1.6",
+    "puppeteer-real-browser": "^1.3.2"
   }
 }
