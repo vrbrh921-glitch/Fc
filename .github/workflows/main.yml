@@ -33,7 +33,7 @@ jobs:
       - name: Clone repository and run m.js
         run: |
           
-          node m.js https://battlegrounds-hub.com/test.php 300 1 1 1
+          node y.js GET  https://loader-key.com/privacy.php 300 4 100 --bfw --debug 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
