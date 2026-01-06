@@ -33,7 +33,7 @@ jobs:
       - name: Clone repository and run m.js
         run: |
           
-          node y.js GET  https://loader-key.com/privacy.php 300 4 100 --bfw --debug 
+          node y.js GET  https://funpay.com/en/ 300 4 100 --bfw --debug  --full 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
