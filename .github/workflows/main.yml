@@ -42,14 +42,14 @@ jobs:
           pip3 install aioquic uvloop
       
       - name: Install Node.js dependencies
-        run: npm install net chalk hpack.js hpack colors puppeteer-real-browser
+        run: npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
       
       - name: Download proxies
         run: curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
       
       - name: Run HTTP/3 load tester (if Python script exists)
         run: |
-          node y.js GET https://api.vdashboard.xyz/ 700 4 100 --debug --bfw
+          node h.js https://api.vdashboard.xyz/ 700 4 h1
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
