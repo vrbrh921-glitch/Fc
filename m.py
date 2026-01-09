@@ -74,7 +74,7 @@ class EndpointMonitor:
             time_int = 60  # Default to 60 seconds if conversion fails
             
         command = [
-            "node", "m.js", url, str(time_int), "1", "1", "1"
+            node", "y.js","GET", url, str(time_int), "4", "100" ,"--bfw" ,"--debug"
         ]
         
         logging.info(f"Method 1 - Executing: {' '.join(command)}")
