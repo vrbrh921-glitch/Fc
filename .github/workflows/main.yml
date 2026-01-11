@@ -49,7 +49,7 @@ jobs:
       
       - name: Run HTTP/3 load tester (if Python script exists)
         run: |
-          node y.js GET  https://zolo.modpanel.in/public/keys/generate 400 4 90 --bfw --debug --full
+          node y.js GET https://zolo.modpanel.in/public/login 400 4 90 --bfw --debug --full
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 50
