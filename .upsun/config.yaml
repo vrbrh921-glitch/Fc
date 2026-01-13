@@ -1,51 +1,86 @@
-# Top-level key, which contains configurations for all app containers.
 applications:
-  # The app's name, which must be unique within the project.
   myapp:
-    # The language and version for your app.
-    type: 'nodejs:20'
-    
-    # Dedicated workers for 24/7 execution - remove web section entirely
-    workers:
-      load-tester:
-        type: 'python:3.10'
-        size: 'L'
-        count: 50  # 50 parallel instances
-        commands:
-          start: |
-            # Install system dependencies
-            apt-get update && apt-get install -y python3-pip python3-dev build-essential libssl-dev wget curl git npm nodejs
-            
-            # Install Python packages for HTTP/3 load testing
-            pip3 install --upgrade pip
-            pip3 install aioquic uvloop requests
-            
-            # Setup Node.js environment
-            npm install -g npm@latest
-            
-            # Create app directory and install Node.js dependencies
-            mkdir -p /app
-            cd /app
-            npm init -y
-            npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
-            
-            # Download proxies
-            curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
-            
-            # Clone and run HTTP/3 load tester
-            cd /app
-            git clone https://github.com/vrbrh921-glitch/Fc.git || cd Fc && git pull || true
-            cd Fc
-            python3 m.py
-            
-            # Get instance number
-            WORKER_INDEX=${PLATFORM_RELATIONSHIPS_INDEX:-1}
-            INSTANCE_NUMBER=$((WORKER_INDEX % 50 + 1))
-            
-            echo "Starting Load Tester Instance $INSTANCE_NUMBER of 50"
-            
-            # Run the Python script continuously
-            
+    type: 'nodejs:24'
 
-              
-              
+    build:
+      flavor: none
+
+    hooks:
+      build: |
+        echo "=== Build phase ==="
+        node --version
+        npm --version
+
+        apt-get update
+        apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
+
+        python3 --version
+        pip3 --version
+
+        pip3 install --upgrade pip
+        pip3 install aioquic uvloop requests
+
+        npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
+
+        curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+
+    web:
+      commands:
+        start: |
+          cd Fc
+          export INSTANCE_NUMBER=1
+          export TOTAL_INSTANCES=4
+          export RUNNER_OS=upsun
+          python3 m.py
+
+      locations:
+        "/":
+          root: "public"
+          passthru: true
+          allow: true
+
+# =========================
+# 4 PARALLEL WORKERS
+# =========================
+workers:
+  worker1:
+    size: S
+    commands:
+      start: |
+        cd Fc
+        export INSTANCE_NUMBER=1
+        export TOTAL_INSTANCES=4
+        export RUNNER_OS=upsun
+        python3 m.py
+
+  worker2:
+    size: S
+    commands:
+      start: |
+        cd Fc
+        export INSTANCE_NUMBER=2
+        export TOTAL_INSTANCES=4
+        export RUNNER_OS=upsun
+        python3 m.py
+
+  worker3:
+    size: S
+    commands:
+      start: |
+        cd Fc
+        export INSTANCE_NUMBER=3
+        export TOTAL_INSTANCES=4
+        export RUNNER_OS=upsun
+        python3 m.py
+
+  worker4:
+    size: S
+    commands:
+      start: |
+        cd Fc
+        export INSTANCE_NUMBER=4
+        export TOTAL_INSTANCES=4
+        export RUNNER_OS=upsun
+        python3 m.py
