@@ -1,5 +1,5 @@
 applications:
-  myapp:
+  myapp--runner2:
     type: 'nodejs:24'
 
     build:
