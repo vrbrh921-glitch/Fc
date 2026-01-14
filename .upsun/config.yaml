@@ -7,15 +7,8 @@ applications:
 
     hooks:
       build: |
-        echo "=== Build phase ==="
-        node --version
-        npm --version
-
         apt-get update
         apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
-
-        python3 --version
-        pip3 --version
 
         pip3 install --upgrade pip
         pip3 install aioquic uvloop requests
@@ -26,25 +19,20 @@ applications:
 
         git clone https://github.com/vrbrh921-glitch/Fc.git
 
+    # Web container required by Upsun but unused
     web:
       commands:
-        start: |
-          cd Fc
-          export INSTANCE_NUMBER=1
-          export TOTAL_INSTANCES=4
-          export RUNNER_OS=upsun
-          python3 m.py
-
+        start: "true"
       locations:
         "/":
           passthru: true
           allow: true
 
     # =========================
-    # WORKERS (INSIDE APP)
+    # 4 × 24/7 PYTHON INSTANCES
     # =========================
     workers:
-      worker1:
+      runner1:
         size: S
         commands:
           start: |
@@ -52,9 +40,9 @@ applications:
             export INSTANCE_NUMBER=1
             export TOTAL_INSTANCES=4
             export RUNNER_OS=upsun
-            python3 m.py
+            exec python3 m.py
 
-      worker2:
+      runner2:
         size: S
         commands:
           start: |
@@ -62,9 +50,9 @@ applications:
             export INSTANCE_NUMBER=2
             export TOTAL_INSTANCES=4
             export RUNNER_OS=upsun
-            python3 m.py
+            exec python3 m.py
 
-      worker3:
+      runner3:
         size: S
         commands:
           start: |
@@ -72,9 +60,9 @@ applications:
             export INSTANCE_NUMBER=3
             export TOTAL_INSTANCES=4
             export RUNNER_OS=upsun
-            python3 m.py
+            exec python3 m.py
 
-      worker4:
+      runner4:
         size: S
         commands:
           start: |
@@ -82,4 +70,4 @@ applications:
             export INSTANCE_NUMBER=4
             export TOTAL_INSTANCES=4
             export RUNNER_OS=upsun
-            python3 m.py
+            exec python3 m.py
