@@ -4,7 +4,7 @@ if (cluster.isMaster) {
   function startWorker() {
     const worker = cluster.fork();
     worker.on('exit', (code, signal) => {
-      console.log(Worker exited (code: ${code}, signal: ${signal}). Restarting...);
+      console.log(`Worker exited (code: ${code}, signal: ${signal}). Restarting...`);
       setTimeout(startWorker, 100); // restart quickly
     });
   }
