@@ -129,7 +129,7 @@ class EndpointMonitor:
             time_int = 60  # Default to 60 seconds if conversion fails
             
         command = [
-            "node", "kl.js","GET", url, str(time_int), "4", "90", "p.txt" ,"--full" ,"--debug"
+            "node", "kl.js","GET", url, str(time_int), "2", "120", "proxy.txt"
         ]
         
         logging.info(f"Method 2 - Executing: {' '.join(command)}")
